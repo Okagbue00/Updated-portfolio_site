@@ -3,8 +3,11 @@
 import { navLinks, navIcons } from '#constants'
 import React from 'react'
 import dayjs from 'dayjs';
+import useTheme from '../hooks/useTheme'
 
 const Navbar = () => {
+  const { theme, toggleTheme } = useTheme()
+
   return (
     <nav>
     <div>
@@ -24,7 +27,19 @@ const Navbar = () => {
         <ul>
             {navIcons.map(({id, img}) => (
                 <li key={id}>
-                    <img src={img} className="icon" alt={`icon-${id}`}/>
+                    {id === 4 ? (
+                        <button
+                            type="button"
+                            onClick={toggleTheme}
+                            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                            className="flex"
+                        >
+                            <img src={img} className="icon cursor-pointer" alt="" />
+                        </button>
+                    ) : (
+                        <img src={img} className="icon" alt={`icon-${id}`}/>
+                    )}
                 </li>
             ))}
         </ul>
