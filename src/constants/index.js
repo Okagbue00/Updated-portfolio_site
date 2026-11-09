@@ -77,52 +77,52 @@ const dockApps = [
 const blogPosts = [
   {
     id: 1,
-    date: "Sep 2, 2025",
+    label: "Threat Intelligence",
     title:
-      "TypeScript Explained: What It Is, Why It Matters, and How to Master It",
-    image: "/images/blog1.png",
-    link: "https://jsmastery.com/blog/typescript-explained-what-it-is-why-it-matters-and-how-to-master-it",
+      "The DFIR Report: Real-World Intrusions Broken Down Step by Step",
+    image: "/images/the-dfir-report.png",
+    link: "https://thedfirreport.com/reports/",
   },
   {
     id: 2,
-    date: "Aug 28, 2025",
-    title: "The Ultimate Guide to Mastering Three.js for 3D Development",
-    image: "/images/blog2.png",
-    link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-three-js-for-3d-development",
+    label: "Security Policy & Cryptography",
+    title: "Schneier on Security: Big-Picture Thinking on Privacy and Security",
+    image: "/images/schneier-on-security.png",
+    link: "https://www.schneier.com",
   },
   {
     id: 3,
-    date: "Aug 15, 2025",
-    title: "The Ultimate Guide to Mastering GSAP Animations",
-    image: "/images/blog3.png",
-    link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-gsap-animations",
+    label: "Investigative Journalism",
+    title: "Krebs on Security: Deep Dives Into Cybercrime and Data Breaches",
+    image: "/images/krebs-on-security.png",
+    link: "https://krebsonsecurity.com",
   },
 ];
 
 const techStack = [
   {
-    category: "Frontend",
-    items: ["React.js", "Next.js", "TypeScript"],
+    category: "Cloud",
+    items: ["Microsoft Azure", "AWS", "Google Cloud"],
   },
   {
-    category: "Mobile",
-    items: ["React Native", "Expo"],
+    category: "Network Sec",
+    items: ["Wireshark", "Suricata", "Zeek"],
   },
   {
-    category: "Styling",
-    items: ["Tailwind CSS", "Sass", "CSS"],
+    category: "SIEM / SOC",
+    items: ["Splunk", "KQL", "Microsoft Sentinel"],
   },
   {
-    category: "Backend",
-    items: ["Node.js", "Express", "NestJS", "Hono"],
+    category: "Offensive",
+    items: ["Kali Linux", "Burp Suite", "Metasploit", "Nmap"],
   },
   {
-    category: "Database",
-    items: ["MongoDB", "PostgreSQL"],
+    category: "Vuln Mgmt",
+    items: [" Nessus", "OpenVAS", "Qualys"],
   },
   {
-    category: "Dev Tools",
-    items: ["Git", "GitHub", "Docker"],
+    category: "Coding",
+    items: ["Python", "JavaScript", "Bash", "PowerShell"],
   },
 ];
 

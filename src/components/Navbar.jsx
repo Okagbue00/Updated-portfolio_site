@@ -4,8 +4,10 @@ import { navLinks, navIcons } from '#constants'
 import React from 'react'
 import dayjs from 'dayjs';
 import useTheme from '../hooks/useTheme'
+import useWindowStore from '#store/window.js';
 
 const Navbar = () => {
+    const {openWindow} = useWindowStore();
   const { theme, toggleTheme } = useTheme()
 
   return (
@@ -15,8 +17,8 @@ const Navbar = () => {
         <p className="font-bold">Francis Portfolio</p>
 
         <ul>
-            {navLinks.map(({id, name}) => (
-                <li key={id}>
+            {navLinks.map(({id, name, type}) => (
+                <li key={id} onClick={() => openWindow(type)}>
                     <p>{name}</p>
                     </li>
             ))}
