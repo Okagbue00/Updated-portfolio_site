@@ -51,8 +51,37 @@ const Welcome = () => {
     const subtitleRef = useRef(null);
 
     useGSAP(() => {
-        const cleanupTitle = setupTextHover(titleRef.current, 'title');
-        const cleanupSubtitle = setupTextHover(subtitleRef.current, 'subtitle');
+        const titleLetters = titleRef.current.querySelectorAll('span');
+        const subtitleLetters = subtitleRef.current.querySelectorAll('span');
+        let cleanupTitle, cleanupSubtitle;
+
+        // Hover effect is switched on only after the intro, so the two don't fight.
+        const enableHover = () => {
+            cleanupTitle = setupTextHover(titleRef.current, 'title');
+            cleanupSubtitle = setupTextHover(subtitleRef.current, 'subtitle');
+        };
+
+        // Respect the OS "reduce motion" setting: skip the intro entirely.
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            enableHover();
+        } else {
+            // ~3s intro: subtitle fades up, "portfolio." drops in, then a bold wave ripples across it.
+            gsap.timeline({ delay: 0.3, onComplete: enableHover })
+                .from(subtitleLetters, {
+                    opacity: 0, y: 20, filter: 'blur(6px)',
+                    duration: 0.5, ease: 'power2.out', stagger: 0.025,
+                })
+                .from(titleLetters, {
+                    opacity: 0, y: 80, scale: 0.6, filter: 'blur(12px)',
+                    duration: 0.9, ease: 'back.out(1.7)', stagger: 0.07,
+                }, '-=0.4')
+                .to(titleLetters, {
+                    fontVariationSettings: "'wght' 900",
+                    duration: 0.25, ease: 'power2.out', stagger: 0.06,
+                    yoyo: true, repeat: 1,
+                }, '-=0.2')
+                .set([...titleLetters, ...subtitleLetters], { clearProps: 'filter,transform' });
+        }
 
         return () => {
             cleanupTitle?.();
@@ -63,17 +92,12 @@ const Welcome = () => {
   return (
     <section id="welcome">
         <p ref={subtitleRef}>
-            {renderText("Hello, I'm Francis! Welcome to my", "text-3xl font-georama", 100)}
+            {renderText("Hello, I'm Francis! Welcome to my", "inline-block text-3xl max-sm:text-lg font-georama", 100)}
         </p>
 
-        <h1 ref={titleRef} className="mt-7">
-            {renderText("portfolio.", "text-9xl italic font-georama")}
+        <h1 ref={titleRef} className="mt-7 max-sm:mt-2">
+            {renderText("portfolio.", "inline-block text-9xl max-sm:text-6xl italic font-georama")}
         </h1>
-
-        <div className="small-screen">
-            <p>This portfolio is designed for desktop/tablet screens only.</p>
-        </div>
-        
         </section>
   )
 }

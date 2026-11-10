@@ -43,15 +43,11 @@ body {
     @apply flex justify-between items-center bg-white/50 dark:bg-black/50 dark:text-white backdrop-blur-3xl p-2 px-5 select-none transition-colors;
 
     div {
-      @apply flex items-center max-sm:w-full max-sm:justify-center gap-5;
-
-      &:last-child {
-        @apply max-sm:hidden;
-      }
+      @apply flex items-center gap-5 max-sm:gap-2.5;
     }
 
     ul {
-      @apply flex items-center gap-5 max-sm:hidden;
+      @apply flex items-center gap-5 max-sm:gap-2.5;
 
       p {
         @apply text-sm cursor-pointer hover:underline transition-all;
@@ -70,19 +66,11 @@ body {
   }
 
   #welcome {
-    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
-
-    .small-screen {
-      @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
-
-      p {
-        @apply flex-1 text-[16px] text-center font-roboto text-gray-400;
-      }
-    }
+    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:w-full max-sm:px-6 max-sm:text-center;
   }
 
   #dock {
-    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
+    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none;
 
     .dock-container {
       @apply bg-white/20 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1.5;
@@ -240,72 +228,97 @@ body {
   }
 
   #photos {
-    @apply max-w-3xl absolute top-96 left-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply absolute top-20 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    width: min(48rem, calc(100vw - 2rem));
+    left: max(1rem, calc(50% - 24rem));
+
+    #window-header h2 {
+      @apply font-bold text-sm text-center flex-1;
+    }
+
+    .gallery-layout {
+      @apply flex;
+      height: min(32rem, calc(100dvh - 12rem));
+    }
 
     .sidebar {
-      @apply w-3/12 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-5;
+      @apply w-48 flex-none bg-gray-50 border-r border-gray-200 flex flex-col p-4 overflow-y-auto;
 
       h2 {
-        @apply text-xs font-medium text-gray-400 mb-1;
+        @apply text-xs font-medium text-gray-400 mb-1 px-3;
       }
 
       ul {
-        li {
-          @apply flex space-y-1 items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
+        @apply space-y-1;
+      }
 
-          &:first-child {
-            @apply bg-blue-100 text-blue-700;
-          }
+      button {
+        @apply w-full flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors text-left hover:bg-gray-200;
 
-          img {
-            @apply w-4;
-          }
+        &.active {
+          @apply bg-blue-100 text-blue-700;
+        }
 
-          p {
-            @apply text-sm font-medium;
-          }
+        img {
+          @apply w-4 flex-none;
+        }
+
+        p {
+          @apply text-sm font-medium truncate;
         }
       }
     }
 
     .gallery {
-      @apply p-5;
+      @apply flex-1 min-w-0 p-5 overflow-y-auto;
 
+      .gallery-count {
+        @apply text-xs text-gray-400 mb-3;
+      }
+
+      .gallery-empty {
+        @apply text-sm text-gray-500 py-10 text-center;
+      }
+
+      /* Works for any number of photos: the first is featured, the rest fill in */
       ul {
-        @apply grid grid-cols-5 grid-rows-5 gap-2.5;
+        @apply grid gap-2.5;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
+        grid-auto-rows: 8rem;
+        grid-auto-flow: dense;
 
-        li {
-          img {
-            @apply size-full object-cover rounded-lg;
-          }
-
-          &:first-child {
-            @apply row-start-1 row-span-3 col-start-1 col-span-3;
-          }
-
-          &:nth-child(2) {
-            @apply row-start-1 row-span-3 col-start-4 col-span-2;
-          }
-
-          &:nth-child(3) {
-            @apply row-start-4 row-span-2 col-start-3 col-span-3;
-          }
-
-          &:last-child {
-            @apply row-start-4 row-span-2 col-start-1 col-span-2;
-          }
+        li:first-child {
+          @apply col-span-2 row-span-2;
         }
+      }
+
+      button {
+        @apply block size-full rounded-lg overflow-hidden bg-gray-100 cursor-pointer ring-blue-500 transition hover:ring-2 focus-visible:ring-2 focus-visible:outline-none;
+      }
+
+      img {
+        @apply size-full object-cover transition-transform duration-300 hover:scale-105;
       }
     }
   }
 
   #resume {
-    @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    @apply w-fit h-fit absolute top-16 right-24 max-lg:right-4 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     #window-header {
       h2 {
         @apply font-bold text-sm text-center flex-1;
       }
+    }
+
+    /* Scroll through every page inside the window instead of running off-screen */
+    .resume-pages {
+      @apply overflow-y-auto bg-gray-100;
+      max-height: calc(100dvh - 10rem);
+    }
+
+    .react-pdf__Page {
+      @apply mb-2 last:mb-0 shadow;
     }
   }
 
@@ -379,8 +392,51 @@ body {
     }
   }
 
+  /* Archive (dock "trash" button) */
+  #trash {
+    @apply absolute top-24 right-24 max-lg:right-4 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    /* fluid: 42rem on desktop, shrinks on tablets / small laptops */
+    width: min(42rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 9rem);
+
+    #window-header h2 {
+      @apply font-bold text-sm text-center flex-1;
+    }
+
+    .archive-body {
+      @apply p-5 bg-white overflow-y-auto;
+      max-height: calc(100dvh - 12rem);
+    }
+
+    .archive-count {
+      @apply text-xs text-gray-400 mb-3;
+    }
+
+    .archive-grid {
+      @apply grid gap-4;
+      /* 2 columns normally, 1 column on very narrow screens */
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+
+      li {
+        @apply flex flex-col items-center gap-2 min-w-0;
+      }
+
+      button {
+        @apply block w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 cursor-pointer ring-blue-500 transition hover:ring-2 focus-visible:ring-2 focus-visible:outline-none;
+      }
+
+      img {
+        @apply size-full object-cover transition-transform duration-300 hover:scale-105;
+      }
+
+      p {
+        @apply text-sm font-medium text-gray-700 truncate max-w-full;
+      }
+    }
+  }
+
   #home {
-    @apply relative z-0 max-sm:hidden;
+    @apply relative z-0;
 
     ul {
       li {
@@ -395,5 +451,247 @@ body {
         }
       }
     }
+  }
+}
+/* ------------------------------------------------------------------
+   Phone layout (< 640px)
+   Same desktop arrangement, scaled down. Windows become full-width
+   sheets between the navbar and the dock and scroll internally.
+   Unlayered, so these override the @layer rules above.
+------------------------------------------------------------------- */
+@media (max-width: 639px) {
+  nav {
+    padding: 6px 12px;
+  }
+
+  nav ul p,
+  nav time {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* Welcome text sits a bit lower so it clears the desktop folders */
+  #welcome {
+    top: 62%;
+  }
+
+  /* Dock: smaller icons so all six fit */
+  #dock {
+    bottom: 12px;
+  }
+
+  #dock .dock-container {
+    gap: 4px;
+    padding: 4px;
+    border-radius: 14px;
+  }
+
+  #dock .dock-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Desktop folder shortcuts */
+  #home li img {
+    width: 48px;
+    height: 48px;
+  }
+
+  #home li p {
+    font-size: 11px;
+    max-width: 90px;
+  }
+
+  /* Every window: fit the screen and scroll inside */
+  section.window {
+    position: fixed;
+    top: 52px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: calc(100dvh - 52px - 80px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    translate: none;
+  }
+
+  /* Keep the title bar visible while scrolling */
+  section.window #window-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 10px 12px;
+  }
+
+  /* Finder: narrower sidebar, files flow in a grid instead of fixed spots */
+  #finder .sidebar {
+    width: 116px;
+    flex: none;
+    padding: 10px 8px;
+  }
+
+  #finder .sidebar li {
+    padding: 6px;
+  }
+
+  #finder .sidebar li p {
+    font-size: 12px;
+  }
+
+  #finder .content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    gap: 16px 8px;
+    padding: 12px;
+    min-width: 0;
+  }
+
+  #finder .content li {
+    position: static;
+  }
+
+  #finder .content li img {
+    width: 48px;
+    height: 48px;
+  }
+
+  #finder .content li p {
+    width: auto;
+    font-size: 12px;
+    word-break: break-word;
+  }
+
+  /* Safari */
+  #safari .search {
+    width: 100%;
+  }
+
+  #safari .search input {
+    min-width: 0;
+    font-size: 14px;
+  }
+
+  #safari .blog {
+    padding: 16px;
+  }
+
+  #safari .blog h2 {
+    margin-bottom: 20px;
+  }
+
+  #safari .blog .blog-post > div:first-child {
+    grid-column: span 3 / span 3;
+  }
+
+  #safari .blog .blog-post .content {
+    grid-column: span 9 / span 9;
+  }
+
+  /* Terminal */
+  #terminal .techstack {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  #terminal .techstack .label {
+    margin-inline-start: 28px;
+  }
+
+  #terminal .techstack .label .w-32,
+  #terminal .techstack .content li h3 {
+    width: 84px;
+    flex: none;
+  }
+
+  #terminal .techstack .content li h3 {
+    margin-inline-start: 8px;
+  }
+
+  #terminal .techstack .content li ul {
+    flex-wrap: wrap;
+    gap: 2px 8px;
+  }
+
+  /* Contact: 2 x 2 grid of social cards */
+  #contact ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #contact ul li {
+    width: auto;
+  }
+
+  #contact p {
+    overflow-wrap: anywhere;
+  }
+
+  /* Archive: the window scrolls, not the inner body */
+  #trash .archive-body {
+    padding: 12px;
+    max-height: none;
+  }
+
+  #trash .archive-grid {
+    gap: 10px;
+  }
+
+  #trash .archive-grid p {
+    font-size: 12px;
+  }
+
+  /* Text & image viewers: the window itself scrolls */
+  #txtfile .max-h-\[70vh\],
+  #imgfile .preview,
+  #resume .resume-pages {
+    max-height: none;
+  }
+
+  /* Gallery: albums become a scrollable row of tabs above the photos */
+  #photos .gallery-layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  #photos .sidebar {
+    width: auto;
+    padding: 8px;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  #photos .sidebar h2 {
+    display: none;
+  }
+
+  #photos .sidebar ul {
+    display: flex;
+    gap: 4px;
+  }
+
+  #photos .sidebar ul > * + * {
+    margin-top: 0;
+  }
+
+  #photos .sidebar button {
+    white-space: nowrap;
+    padding: 6px 10px;
+  }
+
+  #photos .gallery {
+    padding: 12px;
+    overflow: visible;
+  }
+
+  #photos .gallery ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 7rem;
   }
 }

@@ -23,12 +23,16 @@ const Finder = () => {
         openWindow(`${item.fileType}${item.kind}`, item);
     };
 
+    // data-clickable="true" tells the window's Draggable not to start a drag from these
+    // items, so a slightly shaky click still counts as a click.
+
     // Renders one sidebar list; the selected location gets the "active" style
     const renderList = (items) =>
         items.map((item) => (
             <li
                 key={item.id}
                 onClick={() => setActiveLocation(item)}
+                data-clickable="true"
                 className={item.id === activeLocation?.id ? 'active' : 'not-active'}
             >
                 <img src={item.icon} className='w-4' alt={item.name} />
@@ -58,7 +62,7 @@ const Finder = () => {
 
     <ul className='content'>
         {activeLocation?.children.map((item) => (
-            <li key={item.id} className={item.position} onClick={() => openItem(item)}>
+            <li key={item.id} className={item.position} onClick={() => openItem(item)} data-clickable="true">
                 <img src={item.icon} alt={item.name} />
                 <p>{item.name}</p>
             </li>
