@@ -12,7 +12,7 @@ const Contact = () => {
     </div>
 
     <div className='p-5 space-y-5'>
-        <img src='/images/francis1.jpg' alt='francis' className='size-22 rounded-full object-cover object-top' />
+        <img src='/images/francis-suit.png' alt='francis' className='size-22 rounded-full object-cover object-top' />
         <h3>Let's Connect</h3>
         <p>My inbox is the only port I leave open.</p>
         <p>I'm always up for a good tech conversation. Let's talk.</p>

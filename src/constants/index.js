@@ -189,19 +189,19 @@ const gallery = [
   {
     id: 2,
     name: "gal2.png",
-    img: "/images/image11.png",
+    img: "/images/image11.jpg",
     albums: ["Memories"],
   },
   {
     id: 3,
     name: "gal3.png",
-    img: "/images/image13.png",
+    img: "/images/image13.jpg",
     albums: ["Places"],
   },
   {
     id: 4,
     name: "gal4.png",
-    img: "/images/image14.png",
+    img: "/images/image14.jpg",
     albums: ["People", "Favorites"],
   },
 ];
@@ -356,7 +356,7 @@ const ABOUT_LOCATION = {
       kind: "file",
       fileType: "img",
       position: "top-28 right-72",
-      imageUrl: "/images/image11.png",
+      imageUrl: "/images/image11.jpg",
     },
   ],
 };

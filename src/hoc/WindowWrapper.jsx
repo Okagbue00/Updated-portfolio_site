@@ -3,6 +3,7 @@ import  useWindowStore  from "#store/window.js";
 import {useGSAP} from '@gsap/react';
 import gsap from 'gsap';
 import {Draggable} from 'gsap/Draggable';
+import WindowErrorBoundary from '#components/WindowErrorBoundary.jsx';
 
 
 const WindowWrapper = (Component, windowKey) => {
@@ -52,7 +53,9 @@ const WindowWrapper = (Component, windowKey) => {
   return (
     <section id={windowKey} ref={ref} style={{zIndex, display: isOpen ? 'block' : 'none'}} className="absolute window"
         onMouseDown={() => focusWindow(windowKey)}>
-        <Component {...props} />
+        <WindowErrorBoundary windowKey={windowKey}>
+            <Component {...props} />
+        </WindowErrorBoundary>
 
     </section>
   );

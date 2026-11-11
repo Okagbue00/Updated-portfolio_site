@@ -384,10 +384,21 @@ body {
     }
 
     .preview {
-      @apply p-2 bg-gray-200 max-h-[70vh];
+      @apply relative p-2 bg-gray-200 flex items-center justify-center;
+      min-height: 12rem;
 
+      /* Fit the whole picture inside the window on any screen */
       img {
-        @apply w-full h-fit object-contain object-center;
+        @apply block max-w-full w-auto h-auto object-contain opacity-0 transition-opacity duration-300;
+        max-height: calc(100dvh - 16rem);
+
+        &.is-loaded {
+          @apply opacity-100;
+        }
+      }
+
+      .preview-status {
+        @apply absolute inset-0 flex items-center justify-center text-sm text-gray-500;
       }
     }
   }
